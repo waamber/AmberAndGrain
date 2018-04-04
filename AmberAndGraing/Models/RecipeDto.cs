@@ -1,4 +1,4 @@
-﻿namespace AmberAndGraing.Controllers
+﻿namespace AmberAndGraing.Models
 {
 	public class RecipeDto
 	{
