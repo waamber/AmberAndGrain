@@ -29,29 +29,26 @@ namespace AmberAndGraing.Controllers
 		[Route("{batchId}/mash"), HttpPatch]
 		public HttpResponseMessage MashBatch(int batchId)
 		{
-			var repository = new BatchRepository();
-			Batch batch;
+			var batchMasher = new BatchMasher();
+			var mashMe = batchMasher.MashBatch(batchId);
 
-			try
+			switch (mashMe)
 			{
-				batch = repository.Get(batchId);
+				case UpdateStatusResults.NotFound:
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Batch ID does not exist.");
+
+				case UpdateStatusResults.Unsuccessful:
+					return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Batch could not be update, please try again.");
+
+				case UpdateStatusResults.ValidationFailure:
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The batch is not valid, please try again.");
+
+				case UpdateStatusResults.Success:
+					return Request.CreateResponse(HttpStatusCode.OK);
+
+				default:
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Batch could not be updated, please try again.");
 			}
-			catch (Exception ex)
-			{
-
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Batch ID does not exist.");
-			}
-
-			if (batch.Status == BatchStatus.Created)
-			{
-				batch.Status = BatchStatus.Mashed;
-				var result = repository.Update(batch);
-
-				return result ? Request.CreateResponse(HttpStatusCode.OK)
-							  : Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Batch could not be update, please try again.");
-			}
-
-			return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The batch is not valid, please try again.");
 
 		}
 	}
