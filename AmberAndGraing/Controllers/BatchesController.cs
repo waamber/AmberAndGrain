@@ -25,5 +25,35 @@ namespace AmberAndGraing.Controllers
 			return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Batch could not be created, try again.");
 
 		}
+
+		[Route("{batchId}/mash"), HttpPatch]
+		public HttpResponseMessage MashBatch(int batchId)
+		{
+			var repository = new BatchRepository();
+			Batch batch;
+
+			try
+			{
+				batch = repository.Get(batchId);
+			}
+			catch (Exception ex)
+			{
+
+				return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Batch ID does not exist.");
+			}
+
+			if (batch.Status == BatchStatus.Created)
+			{
+				batch.Status = BatchStatus.Mashed;
+				var result = repository.Update(batch);
+
+				return result ? Request.CreateResponse(HttpStatusCode.OK)
+							  : Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Batch could not be update, please try again.");
+			}
+
+			return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The batch is not valid, please try again.");
+
+		}
 	}
+
 }
