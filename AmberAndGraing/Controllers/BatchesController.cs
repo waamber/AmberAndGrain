@@ -49,8 +49,6 @@ namespace AmberAndGraing.Controllers
 				default:
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Batch could not be updated, please try again.");
 			}
-
 		}
 	}
-
 }
