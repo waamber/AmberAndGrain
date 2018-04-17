@@ -26,5 +26,16 @@ namespace AmberAndGraing.Controllers
 			return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Could not create recipe, please try again.");
 			
 		}
+
+		[Route(""), HttpGet]
+		public HttpResponseMessage GetAllRecipes()
+		{
+			var repository = new RecipeRepository();
+			var recipes = repository.GetAll();
+
+			return Request.CreateResponse(HttpStatusCode.OK, recipes);
+		}
     }
+
+
 }
