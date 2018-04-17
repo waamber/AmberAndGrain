@@ -5,6 +5,15 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmberAndGrain", "AmberAndGraing\AmberAndGrain.csproj", "{355F08FA-BA79-4AC6-A7A2-09296CC31358}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{302668F0-5C4E-4867-A2E8-42CC0AD39120}"
+	ProjectSection(SolutionItems) = preProject
+		app.js = app.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "controllers", "controllers", "{4D4BEF73-2B82-45E9-8D4A-63B20C7B1901}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "partials", "partials", "{5A8B2E5B-7C5C-41F3-85FF-3A1112240529}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +27,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4D4BEF73-2B82-45E9-8D4A-63B20C7B1901} = {302668F0-5C4E-4867-A2E8-42CC0AD39120}
+		{5A8B2E5B-7C5C-41F3-85FF-3A1112240529} = {302668F0-5C4E-4867-A2E8-42CC0AD39120}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {377D6846-D4C8-42E5-9CD0-7D1208FABE1D}

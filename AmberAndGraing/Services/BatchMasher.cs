@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Net;
 using System.Web;
+using static AmberAndGraing.Models.UpdateResults;
 
 namespace AmberAndGraing.Services
 {
@@ -18,6 +18,7 @@ namespace AmberAndGraing.Services
 			try
 			{
 				batch = repository.Get(batchId);
+
 			}
 			catch (SqlException)
 			{
@@ -25,20 +26,19 @@ namespace AmberAndGraing.Services
 			}
 			catch (Exception ex)
 			{
-
 				return UpdateStatusResults.NotFound;
 			}
 
-			if (batch.Status == BatchStatus.Created)
-			{
-				batch.Status = BatchStatus.Mashed;
-				var result = repository.Update(batch);
 
-				return result ? UpdateStatusResults.Success
-							  : UpdateStatusResults.Unsuccessful;
-			}
+			if (batch.Status != BatchStatus.Created)
+				return UpdateStatusResults.ValidationFailure;
 
-			return UpdateStatusResults.ValidationFailure;
+			batch.Status = BatchStatus.Mashed;
+			var result = repository.Update(batch);
+			return result
+				? UpdateStatusResults.Success
+				: UpdateStatusResults.Unsuccessful;
+
 		}
 	}
 }
